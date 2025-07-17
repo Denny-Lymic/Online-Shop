@@ -1,0 +1,61 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+# === Общие файлы ОС ===
+.DS_Store
+Thumbs.db
+
+# === Visual Studio / ASP.NET ===
+*.user
+*.suo
+*.sln.docstates
+.vs/
+**/bin/
+**/obj/
+**/Properties/launchSettings.json
+
+# === ASP.NET build ===
+**/*.dbmdl
+**/*.pdb
+**/*.cache
+**/*.log
+**/*.ide
+
+# === Node.js / React FrontEnd ===
+/FrontEnd/node_modules/
+/FrontEnd/dist/
+/FrontEnd/dist-ssr/
+/FrontEnd/.vite/
+/FrontEnd/.next/
+/FrontEnd/.local/
+/FrontEnd/*.log
+
+# Vite specific files
+/FrontEnd/.vite/
+
+# Local environment files
+**/.env
+**/.env.local
+
+# === IDE и редакторы ===
+.idea/
+.vscode/
+!.vscode/extensions.json
+
+# === SQL миграции (если есть бак файлы) ===
+*.bak
+*.mdf
+*.ldf
+*.sql
+
+# === Логи всего проекта ===
+logs/
+*.log
+
+# === Специальные для Windows ===
+*.swp
+*.swn
+
+# === Автоматически скачанные библиотеки (например, bootstrap в wwwroot) ===
+BackEnd/OnlineShop/wwwroot/lib/
