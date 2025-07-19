@@ -1,8 +1,7 @@
-import { Heading, LinkBox, LinkOverlay } from '@chakra-ui/react';
 import viteLogo from '/vite.svg';
-import { Await, data, Link, useLoaderData } from 'react-router';
-import { Suspense, useEffect } from 'react';
-import UserBox from './UserBox/UserBox';
+import { Await, useLoaderData } from 'react-router';
+import { Suspense } from 'react';
+import UserBox from './UserBox';
 
 export default function User() {
     const { user } = useLoaderData();

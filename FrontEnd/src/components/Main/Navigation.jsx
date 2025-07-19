@@ -1,10 +1,10 @@
-import User from './User'
+import User from './UserBox/User'
 import { Flex, Text, Link, Spacer, Drawer, Portal, Button, CloseButton, Stack, LinkBox, LinkOverlay } from '@chakra-ui/react'
 
 export default function NavBar() {
     return (
         <>
-            <Flex px={8} bg="gray.100" align="center" shadow="md" hideBelow="md">
+            <Flex pl={8} bg="gray.100" align="center" shadow="md" hideBelow="md">
                 {/* Название проекта */}
                 <Text fontSize="xl" fontWeight="bold" py={4}>Online-Shop</Text>
 

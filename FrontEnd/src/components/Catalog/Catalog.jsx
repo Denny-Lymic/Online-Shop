@@ -1,4 +1,4 @@
-import { products } from '../../products.js'
+import { products } from '../../../products.js'
 import { CardEntity } from './Card.jsx'
 import viteLogo from '/vite.svg'
 import { Box } from '@chakra-ui/react'

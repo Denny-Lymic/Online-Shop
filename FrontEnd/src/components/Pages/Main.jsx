@@ -1,7 +1,7 @@
 import NavBar from '../Main/Navigation.jsx'
 import { Box, Stack } from '@chakra-ui/react'
-import Catalog from '../Main/Catalog.jsx'
-import Filter from '../Main/Filter.jsx'
+import Catalog from '../Main/Catalog/Catalog.jsx'
+import Filter from '../Main/Catalog/Filter.jsx'
 
 export default function Main() {
     return (

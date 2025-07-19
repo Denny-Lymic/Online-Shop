@@ -1,4 +1,4 @@
-export const products = [
+export const products1 = [
     {
         Name: "AMD Ryzen 5 5600",
         Category: "CPU",
