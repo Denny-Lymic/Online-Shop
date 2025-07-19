@@ -1,23 +1,26 @@
-import { Avatar, Flex, Heading, LinkBox, LinkOverlay, Text } from '@chakra-ui/react';
+import { Heading, LinkBox, LinkOverlay } from '@chakra-ui/react';
 import viteLogo from '/vite.svg';
-import { Link, useLoaderData } from 'react-router';
+import { Await, data, Link, useLoaderData } from 'react-router';
+import { Suspense, useEffect } from 'react';
+import UserBox from './UserBox/UserBox';
 
 export default function User() {
-    const data = useLoaderData();
+    const { user } = useLoaderData();
 
     return (
-        <LinkBox gap={2} display="flex" alignItems="center">
-            <Avatar.Root>
-                <Avatar.Image src={viteLogo} size="sm" />
-                <Avatar.Fallback name="Biba" />
-            </Avatar.Root>
-            <Heading>
-                <LinkOverlay fontSize="sm" asChild>
-                    <Link to="/login">
-                        {data?.user?.name || "Вход / Регистрация"}
-                    </Link>
-                </LinkOverlay>
-            </Heading>
-        </LinkBox>
+        <Suspense fallback={
+            <UserBox src={viteLogo}>
+                Загрузка...
+            </UserBox>
+        }>
+            <Await resolve={user}>
+                {(data) => (
+                    <UserBox to={data?.user ? "/" : "/login"}>
+                        {/* `/profile/${data.user.id}` */}
+                        {data?.user?.name || "Вход/Регистрация"}
+                    </UserBox>
+                )}
+            </Await>
+        </Suspense>
     )
 }

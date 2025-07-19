@@ -46,11 +46,12 @@ builder.Services.AddDbContext<ShopDbContext>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+var viteConnectionString = builder.Configuration.GetConnectionString("ViteConnection") ?? throw new InvalidOperationException("Connection string 'ViteConnection' not found."); ;
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowLocal",
       policy => policy
-        .WithOrigins("http://localhost:5173")
+        .WithOrigins(viteConnectionString)
         .AllowAnyHeader()
         .AllowAnyMethod());
 });

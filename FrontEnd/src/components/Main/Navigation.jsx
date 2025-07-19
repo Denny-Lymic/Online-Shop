@@ -1,5 +1,4 @@
 import User from './User'
-import viteLogo from '/vite.svg'
 import { Flex, Text, Link, Spacer, Drawer, Portal, Button, CloseButton, Stack, LinkBox, LinkOverlay } from '@chakra-ui/react'
 
 export default function NavBar() {

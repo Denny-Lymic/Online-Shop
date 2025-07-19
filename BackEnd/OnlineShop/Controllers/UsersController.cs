@@ -102,7 +102,7 @@ namespace OnlineShop.Controllers
                 return BadRequest(new { token.Errors });
             }
 
-            if(token.Data == null)
+            if (token.Data == null)
             {
                 return BadRequest(new { Message = "Something went wrong." });
             }

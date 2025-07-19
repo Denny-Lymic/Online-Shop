@@ -2,7 +2,7 @@ import './App.css'
 import { createBrowserRouter, RouterProvider } from 'react-router';
 import { Provider } from './components/ui/provider.jsx'
 import Login, { action as loginAction } from './components/Pages/Login.jsx'
-import getProfile from './assets/requests/profile.js';
+import { loader as loadMainPage } from './requests/mainLoader.js';
 import Registration, { action as regAction } from './components/Pages/Registration.jsx';
 import Main from './components/Pages/Main.jsx';
 
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
-    loader: getProfile
+    loader: loadMainPage
   }])
 
 function App() {

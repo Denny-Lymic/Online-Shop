@@ -16,7 +16,6 @@ namespace OnlineShop.Controllers
         }
 
         [HttpGet]
-        [Route("AllProducts")]
         public async Task<IActionResult> GetAllProducts()
         {
             var products = await _productsService.GetAllProductsAsync();

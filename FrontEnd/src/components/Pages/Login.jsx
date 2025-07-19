@@ -22,7 +22,7 @@ export async function action({ request }) {
         if (Object.keys(errors).length)
             return { errors };
 
-        const res = await fetch("https://localhost:44387/api/Users/Login", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/Users/Login`, {
             method: "POST",
             body: JSON.stringify({ email, password }),
             headers: { "Content-Type": "application/json" }
@@ -34,7 +34,6 @@ export async function action({ request }) {
         }
 
         const result = await res.json();
-        console.log("From action " + result.token);
 
         localStorage.setItem("authToken", result.token);
 
@@ -53,9 +52,9 @@ export default function Login() {
 
     useEffect(() => {
         if (actionData?.token) {
-            console.log(actionData.token);
             navigate("/");
         }
+
     }, [actionData, navigate])
 
     return (
