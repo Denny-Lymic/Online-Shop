@@ -40,6 +40,7 @@ namespace OnlineShop.Repositories
             Expression<Func<ProductEntity, object>> selectorKey = productFilter.SortBy?.ToLower() switch
             {
                 "price" => product => product.Price,
+                "name" => product => product.Name,
                 _ => product => product.Id,
             };
 
@@ -50,9 +51,14 @@ namespace OnlineShop.Repositories
                 query = query.Where(p => EF.Functions.Like(p.Name, $"%{productFilter.Name}%"));
             }
 
-            if (productFilter.Price > 0)
+            if (productFilter.LowerPrice > 0)
             {
-                query = query.Where(p => p.Price <= productFilter.Price);
+                query = query.Where(p => p.Price <= productFilter.LowerPrice);
+            }
+
+            if (productFilter.UpperPrice < 30000)
+            {
+                query = query.Where(p => p.Price <= productFilter.UpperPrice);
             }
 
             if (!string.IsNullOrEmpty(productFilter.Category))
@@ -81,6 +87,22 @@ namespace OnlineShop.Repositories
                         .Take(pageSize);
 
             return await query.ToListAsync();
+        }
+
+        public async Task<List<string>> GetCategoriesAsync()
+        {
+            return await _context.Products
+                .AsNoTracking()
+                .Select(p => p.Category)
+                .Distinct()
+                .ToListAsync();
+        }
+
+        public async Task<double> GetMaxPriceAsync()
+        {
+            return await _context.Products
+                .AsNoTracking()
+                .MaxAsync(p => p.Price);
         }
 
         public async Task AddAsync(CreateProductDto productDto)

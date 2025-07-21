@@ -22,7 +22,9 @@
 
         public string? Category { get; set; } = string.Empty;
 
-        public double? Price { get; set; }
+        public double? LowerPrice { get; set; }
+
+        public double? UpperPrice { get; set; }
 
         public string? SortBy { get; set; } = string.Empty;
 

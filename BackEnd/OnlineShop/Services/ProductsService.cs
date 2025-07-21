@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using BackEnd.DTO.Product;
+using Microsoft.AspNetCore.Authentication;
 using OnlineShop.DTO.Product;
 using OnlineShop.Entities;
 using OnlineShop.Models;
@@ -92,6 +93,24 @@ namespace OnlineShop.Services
             }).ToList();
 
             return productsDto;
+        }
+
+        public async Task<List<CategoryDto>> GetProductCategoriesAsync()
+        {
+            var categories = await _productsRepository.GetCategoriesAsync();    
+
+            var categoriesDto = categories
+                .Select((c, index) => new CategoryDto { Id = index + 1, Category = c })
+                .ToList();
+
+            return categoriesDto;
+        }
+
+        public async Task<double> GetMaxPrice()
+        {
+            var maxPrice = await _productsRepository.GetMaxPriceAsync();    
+
+            return maxPrice;
         }
 
         public async Task<ServiceResult> CreateProductAsync(CreateProductDto productDto)

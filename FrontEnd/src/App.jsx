@@ -1,10 +1,13 @@
 import './App.css'
 import { createBrowserRouter, RouterProvider } from 'react-router';
 import { Provider } from './components/ui/provider.jsx'
-import Login, { action as loginAction } from './components/Pages/Login.jsx'
+import Login from './components/Pages/Login.jsx'
+import { action as loginAction } from './requests/login.js';
 import { loader as loadMainPage } from './requests/mainLoader.js';
-import Registration, { action as regAction } from './components/Pages/Registration.jsx';
+import Registration from './components/Pages/Registration.jsx';
+import { action as regAction } from './requests/registration.js';
 import Main from './components/Pages/Main.jsx';
+import { getProducts } from './requests/getProducts.js';
 
 const router = createBrowserRouter([
   {
@@ -20,7 +23,8 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
-    loader: loadMainPage
+    loader: loadMainPage,
+    action: getProducts
   }])
 
 function App() {
