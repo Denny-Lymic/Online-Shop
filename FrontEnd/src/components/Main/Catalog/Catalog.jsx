@@ -14,7 +14,7 @@ export default function Catalog() {
     return (
         <Suspense fallback={
             <Grid templateColumns={`repeat(${columns}, 1fr)`} gap={2} w="5/6" h="auto">
-                {Array(columns).fill(0).map((_, index) => (
+                {Array(columns * 2).fill(0).map((_, index) => (
                     <Skeleton
                         key={index}
                         variant="shine"

@@ -18,13 +18,13 @@
 
     public class ProductSearchFilter
     {
-        public string? Name { get; set; } = string.Empty;
+        public string? Search { get; set; } = string.Empty;
 
         public string? Category { get; set; } = string.Empty;
 
-        public double? LowerPrice { get; set; }
+        public double? MinPrice { get; set; }
 
-        public double? UpperPrice { get; set; }
+        public double? MaxPrice { get; set; }
 
         public string? SortBy { get; set; } = string.Empty;
 

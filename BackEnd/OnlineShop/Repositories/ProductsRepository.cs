@@ -46,19 +46,19 @@ namespace OnlineShop.Repositories
 
             var query = _context.Products.AsNoTracking();
 
-            if (!string.IsNullOrEmpty(productFilter.Name))
+            if (!string.IsNullOrEmpty(productFilter.Search))
             {
-                query = query.Where(p => EF.Functions.Like(p.Name, $"%{productFilter.Name}%"));
+                query = query.Where(p => EF.Functions.Like(p.Name, $"%{productFilter.Search}%"));
             }
 
-            if (productFilter.LowerPrice > 0)
+            if (productFilter.MinPrice > 0)
             {
-                query = query.Where(p => p.Price <= productFilter.LowerPrice);
+                query = query.Where(p => p.Price >= productFilter.MinPrice);
             }
 
-            if (productFilter.UpperPrice < 30000)
+            if (productFilter.MaxPrice < 30000)
             {
-                query = query.Where(p => p.Price <= productFilter.UpperPrice);
+                query = query.Where(p => p.Price <= productFilter.MaxPrice);
             }
 
             if (!string.IsNullOrEmpty(productFilter.Category))

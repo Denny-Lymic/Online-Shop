@@ -48,11 +48,6 @@ namespace OnlineShop.Controllers
         {
             var products = await _productsService.GetProductsByFilterAsync(productFilter);
 
-            if (products == null || !products.Any())
-            {
-                return NotFound("No products found matching the search criteria.");
-            }
-
             return Ok(products);
         }
 
