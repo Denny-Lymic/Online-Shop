@@ -11,16 +11,6 @@ export async function loader() {
                 return res.json()
             });
 
-        const productsPromise = fetch(`${import.meta.env.VITE_API_URL}/api/Products`, {
-            method: "GET"
-        })
-            .then(res => {
-                if (!res.ok) {
-                    return;
-                }
-                return res.json();
-            });
-
         const categoriesPromise = fetch(`${import.meta.env.VITE_API_URL}/api/Products/Categories`, {
             method: "GET"
         })
@@ -31,25 +21,13 @@ export async function loader() {
                 return res.json();
             });
 
-        const maxPricePromise = fetch(`${import.meta.env.VITE_API_URL}/api/Products/MaxPrice`, {
-            method: "GET"
-        })
-            .then(res => {
-                if (!res.ok) {
-                    return;
-                }
-                return res.json();
-            });
 
-        return {
+        return ({
             user: Promise.resolve(userPromise),
-            products: Promise.resolve(productsPromise),
-            categories: await Promise.resolve(categoriesPromise),
-            maxPrice: await Promise.resolve(maxPricePromise)
-        };
+            categories: await categoriesPromise,
+        })
     }
     catch (e) {
         console.error({ message: e.message || "Сервер недоступен" });
     }
 }
-

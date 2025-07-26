@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BackEnd.Entities;
+using Microsoft.EntityFrameworkCore;
 using OnlineShop.Configurations;
 using OnlineShop.Entities;
 
@@ -20,10 +21,12 @@ namespace OnlineShop.Data
             modelBuilder.Entity<ProductEntity>().ToTable("Products");
             modelBuilder.Entity<OrderEntity>().ToTable("Orders");
             modelBuilder.Entity<UserEntity>().ToTable("Users");
+            modelBuilder.Entity<CategoryEntity>().ToTable("Categories");
 
             modelBuilder.ApplyConfiguration(new OrderDbConfiguration());
             modelBuilder.ApplyConfiguration(new ProductDbConfiguration());
             modelBuilder.ApplyConfiguration(new UserDbConfiguration());
+            modelBuilder.ApplyConfiguration(new CategoryDbConfiguration());
         }
     }
 }

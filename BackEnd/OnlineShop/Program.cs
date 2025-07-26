@@ -51,7 +51,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowLocal",
       policy => policy
-        .WithOrigins(viteConnectionString)
+        .WithOrigins(viteConnectionString, "http://localhost:47378")
         .AllowAnyHeader()
         .AllowAnyMethod());
 });
@@ -60,6 +60,7 @@ var app = builder.Build();
 
 app.UseCors("AllowLocal");
 
+app.UseDeveloperExceptionPage();
 app.UseSwagger();
 app.UseSwaggerUI(options => // UseSwaggerUI is called only in Development.
 {

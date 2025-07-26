@@ -1,18 +1,16 @@
+import { Link } from 'react-router'
 import User from './UserBox/User'
-import { Flex, Text, Link, Spacer, Drawer, Portal, Button, CloseButton, Stack, LinkBox, LinkOverlay } from '@chakra-ui/react'
+import { Flex, Text, Spacer, Drawer, Portal, Button, CloseButton, Stack, LinkBox, LinkOverlay } from '@chakra-ui/react'
 
 export default function NavBar() {
     return (
         <>
-            <Flex pl={8} bg="gray.100" align="center" shadow="md" hideBelow="md">
-                {/* Название проекта */}
+            <Flex pl={8} bg="gray.100" align="center" shadow="lg" hideBelow="md">
                 <Text fontSize="xl" fontWeight="bold" py={4}>Online-Shop</Text>
 
-                {/* Навигационные ссылки */}
-                <Flex gap={6} ml={10} align={"stretch"} py={4}>
-                    <LinkBox><LinkOverlay href="#">Главная</LinkOverlay></LinkBox>
-                    <LinkBox><LinkOverlay href="#">Каталог</LinkOverlay></LinkBox>
-                    <LinkBox><LinkOverlay href="#">О нас</LinkOverlay></LinkBox>
+                <Flex gap={2} ml={6} align={"stretch"}>
+                    <LinkBox><LinkOverlay as={Link} to="/" py={4} px={2}>Главная</LinkOverlay></LinkBox>
+                    <LinkBox><LinkOverlay as={Link} to="/create" py={4} px={2}>Добавить продукт</LinkOverlay></LinkBox>
                 </Flex>
 
                 <Spacer />

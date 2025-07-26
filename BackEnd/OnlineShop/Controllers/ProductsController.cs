@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BackEnd.DTO.Product;
+using Microsoft.AspNetCore.Mvc;
 using OnlineShop.DTO.Product;
+using OnlineShop.Models;
 using OnlineShop.Services;
 
 namespace OnlineShop.Controllers
@@ -90,8 +92,9 @@ namespace OnlineShop.Controllers
         }
 
         [HttpPost]
+        [Consumes("multipart/form-data")]
         [Route("Create")]
-        public async Task<IActionResult> CreateProduct([FromBody] CreateProductDto productDto)
+        public async Task<IActionResult> CreateProduct([FromForm] CreateProductDto productDto)
         {
             var result = await _productsService.CreateProductAsync(productDto);
 
@@ -115,6 +118,19 @@ namespace OnlineShop.Controllers
             }
 
             return Ok(new { Message = "Product updated successfully." });
+        }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        [Route("UpdateProductImage")]
+        public async Task<IActionResult> UpdateProductImage([FromForm] UpdateImageRequest imageRequest)
+        {
+            var result = await _productsService.UpdateImageAsync(imageRequest);
+            if (!result.isSuccess)
+            {
+                return BadRequest(result.Errors);
+            }
+            return Ok();
         }
 
         [HttpDelete]

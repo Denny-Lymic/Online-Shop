@@ -112,7 +112,8 @@ namespace OnlineShop.Repositories
                 Name = productDto.Name,
                 Category = productDto.Category,
                 Price = productDto.Price ?? 0,
-                Description = productDto.Description
+                Description = productDto.Description,
+                ImageUrl = productDto.ImageUrl ?? "",
             };
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
@@ -126,7 +127,8 @@ namespace OnlineShop.Repositories
                     .SetProperty(x => x.Name, productDto.Name)
                     .SetProperty(x => x.Category, productDto.Category)
                     .SetProperty(x => x.Price, productDto.Price)
-                    .SetProperty(x => x.Description, productDto.Description));
+                    .SetProperty(x => x.Description, productDto.Description)
+                    .SetProperty(x => x.ImageUrl, productDto.ImageUrl));
         }
 
         public async Task DeleteAsync(int id)

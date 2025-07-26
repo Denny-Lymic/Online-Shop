@@ -1,7 +1,5 @@
 ﻿using BackEnd.DTO.Product;
-using Microsoft.AspNetCore.Authentication;
 using OnlineShop.DTO.Product;
-using OnlineShop.Entities;
 using OnlineShop.Models;
 using OnlineShop.Repositories;
 
@@ -10,12 +8,14 @@ namespace OnlineShop.Services
     public class ProductsService
     {
         private readonly ProductsRepository _productsRepository;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductsService(ProductsRepository productsRepository)
+        public ProductsService(ProductsRepository productsRepository, IWebHostEnvironment webHostEnvironment)
         {
             _productsRepository = productsRepository;
+            _webHostEnvironment = webHostEnvironment;
         }
-    
+
         public async Task<List<ProductDto>> GetAllProductsAsync()
         {
             var products = await _productsRepository.GetAllAsync();
@@ -30,12 +30,13 @@ namespace OnlineShop.Services
                 Id = p.Id,
                 Name = p.Name,
                 Category = p.Category,
-                Price = p.Price
+                Price = p.Price,
+                ImageUrl = p.ImageUrl
             }).ToList();
 
             return productsDto;
         }
-    
+
         public async Task<ProductWithDescriptionDto?> GetProductByIdAsync(int productId)
         {
             var product = await _productsRepository.GetByIdAsync(productId);
@@ -51,6 +52,7 @@ namespace OnlineShop.Services
                 Name = product.Name,
                 Category = product.Category,
                 Price = product.Price,
+                ImageUrl = product.ImageUrl,
                 Description = product.Description
             };
 
@@ -66,15 +68,18 @@ namespace OnlineShop.Services
                 return new List<ProductDto>();
             }
 
-            var productDtos = products.Select(p => new ProductDto { 
+            var productDtos = products.Select(p => new ProductDto
+            {
                 Id = p.Id,
-                Name = p.Name, 
-                Category = p.Category, 
-                Price = p.Price }).ToList();
+                Name = p.Name,
+                Category = p.Category,
+                Price = p.Price,
+                ImageUrl= p.ImageUrl,
+            }).ToList();
 
             return productDtos;
         }
-            
+
         public async Task<List<ProductDto>> GetProductsByPageAsync(int page, int pageSize, string? category = null)
         {
             var products = await _productsRepository.GetByPageAsync(page, pageSize, category);
@@ -89,7 +94,8 @@ namespace OnlineShop.Services
                 Id = p.Id,
                 Name = p.Name,
                 Category = p.Category,
-                Price = p.Price
+                Price = p.Price,
+                ImageUrl = p.ImageUrl,
             }).ToList();
 
             return productsDto;
@@ -97,7 +103,7 @@ namespace OnlineShop.Services
 
         public async Task<List<CategoryDto>> GetProductCategoriesAsync()
         {
-            var categories = await _productsRepository.GetCategoriesAsync();    
+            var categories = await _productsRepository.GetCategoriesAsync();
 
             var categoriesDto = categories
                 .Select((c, index) => new CategoryDto { Id = index + 1, Category = c })
@@ -108,7 +114,7 @@ namespace OnlineShop.Services
 
         public async Task<double> GetMaxPrice()
         {
-            var maxPrice = await _productsRepository.GetMaxPriceAsync();    
+            var maxPrice = await _productsRepository.GetMaxPriceAsync();
 
             return maxPrice;
         }
@@ -124,6 +130,12 @@ namespace OnlineShop.Services
             }
 
             var existingProduct = await _productsRepository.GetByNameAsync(productDto.Name);
+
+            if (productDto.Image == null || productDto.Image.Length == 0)
+            {
+                result.Errors.Add("Image file is required.");
+                return result;
+            }
 
             if (existingProduct != null)
             {
@@ -147,16 +159,24 @@ namespace OnlineShop.Services
             {
                 result.Errors.Add("Product description is required.");
             }
-            if(!result.isSuccess)
+            if (!result.isSuccess)
             {
                 return result;
             }
 
+            var extension = Path.GetExtension(productDto.Image.FileName);
+            var newName = $"{Guid.NewGuid()}{extension}";
+            var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "products", newName);
+            productDto.ImageUrl = newName;
+
             await _productsRepository.AddAsync(productDto);
+
+            await using var stream = new FileStream(filePath, FileMode.Create);
+            await productDto.Image.CopyToAsync(stream);
 
             return result;
         }
-    
+
         public async Task<ServiceResult> UpdateProductAsync(int id, UpdateProductDto productDto)
         {
             var result = new ServiceResult();
@@ -175,7 +195,7 @@ namespace OnlineShop.Services
                 {
                     var existingProductByName = await _productsRepository.GetByNameAsync(productDto.Name);
 
-                    if (existingProductByName != null 
+                    if (existingProductByName != null
                         && string.Equals(existingProductByName.Name, productDto.Name, StringComparison.OrdinalIgnoreCase))
                     {
                         result.Errors.Add("This product name is already exist");
@@ -183,23 +203,59 @@ namespace OnlineShop.Services
                 }
             }
             else
-            {
                 productDto.Name = existingProduct.Name;
-            }
+
             if (string.IsNullOrEmpty(productDto.Category))
-            {
                 productDto.Category = existingProduct.Category;
-            }
+
             if (!productDto.Price.HasValue)
-            {
                 productDto.Price = existingProduct.Price;
-            }
+
+            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "products", existingProduct.ImageUrl);
+            if (File.Exists(oldImagePath))
+                File.Delete(oldImagePath);
 
             await _productsRepository.UpdateAsync(id, productDto);
 
             return result;
         }
-    
+
+        public async Task<ServiceResult> UpdateImageAsync(UpdateImageRequest imageRequest)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                if (imageRequest.Image == null || imageRequest.Image.Length == 0)
+                {
+                    throw new Exception("Image file is required.");
+                }
+
+                var product = await _productsRepository.GetByIdAsync(imageRequest.productId);
+
+                if (product == null)
+                {
+                    throw new Exception("Product not found");
+                }
+
+                var extension = Path.GetExtension(imageRequest.Image.FileName);
+                var newName = $"{Guid.NewGuid()}{extension}";
+                var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "products", newName);
+
+                await UpdateProductAsync(imageRequest.productId, new UpdateProductDto { ImageUrl = newName });
+
+                await using var stream = new FileStream(filePath, FileMode.Create);
+                await imageRequest.Image.CopyToAsync(stream);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.Errors.Add(ex.Message);
+
+                return result;
+            }
+        }
+
         public async Task<ServiceResult> DeleteProductAsync(int productId)
         {
             var result = new ServiceResult();
@@ -211,6 +267,10 @@ namespace OnlineShop.Services
                 result.Errors.Add("Product not found.");
                 return result;
             }
+
+            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "products", existingProduct.ImageUrl);
+            if (File.Exists(oldImagePath))
+                File.Delete(oldImagePath);
 
             await _productsRepository.DeleteAsync(productId);
 

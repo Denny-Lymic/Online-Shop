@@ -3,11 +3,17 @@ import { createBrowserRouter, RouterProvider } from 'react-router';
 import { Provider } from './components/ui/provider.jsx'
 import Login from './components/Pages/Login.jsx'
 import { action as loginAction } from './requests/login.js';
-import { loader as loadMainPage } from './requests/mainLoader.js';
 import Registration from './components/Pages/Registration.jsx';
 import { action as regAction } from './requests/registration.js';
+import { loader as loadMainPage } from './requests/mainLoader.js';
 import Main from './components/Pages/Main.jsx';
 import { getProducts } from './requests/getProducts.js';
+import { loader as loadUser } from './requests/createLoader.js';
+import CreateProduct from './components/Pages/CreateProduct.jsx';
+import { createProduct } from './requests/createProducts.js';
+import ProductLayout from './components/Pages/ProductLayout.jsx';
+import { loader as loadProduct } from './requests/loadProduct.js';
+import ProductDetails from './components/Pages/ProductDetails.jsx';
 
 const router = createBrowserRouter([
   {
@@ -25,7 +31,25 @@ const router = createBrowserRouter([
     element: <Main />,
     loader: loadMainPage,
     action: getProducts
-  }])
+  },
+  {
+    path: "/create",
+    element: <CreateProduct />,
+    loader: loadUser,
+    action: createProduct
+  },
+  {
+    path: "/product/:id",
+    element: <ProductLayout />,
+    loader: loadProduct,
+    children: [
+      {
+        index: true,
+        element: <ProductDetails />
+      }
+    ]
+  },
+])
 
 function App() {
   return (
