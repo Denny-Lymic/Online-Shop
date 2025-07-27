@@ -1,11 +1,11 @@
-import { Center, HStack, Stack, AspectRatio, Image, Card, Button, Spacer, Text, Span, Box, Separator } from "@chakra-ui/react";
-import { Await, useNavigation } from "react-router";
+import { Center, Stack, AspectRatio, Image, Card, Button, Text, Span, Box, Separator } from "@chakra-ui/react";
+import { Await, Link, useNavigation } from "react-router";
 import { useOutletContext } from "react-router";
 import viteLogo from "/vite.svg"
 import { Suspense } from "react";
 
 export default function ProductDetails() {
-    const product = useOutletContext();
+    const { product } = useOutletContext();
     const navigation = useNavigation();
     const isBusy = navigation.state !== "idle";
 
@@ -88,6 +88,8 @@ export default function ProductDetails() {
                                                     _hover={{
                                                         bg: "rgb(122, 151, 9)"
                                                     }}
+                                                    as={Link}
+                                                    to={`update`}
                                                 >
                                                     Изменить
                                                 </Button>

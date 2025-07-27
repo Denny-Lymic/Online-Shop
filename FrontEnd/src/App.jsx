@@ -10,10 +10,11 @@ import Main from './components/Pages/Main.jsx';
 import { getProducts } from './requests/getProducts.js';
 import { loader as loadUser } from './requests/createLoader.js';
 import CreateProduct from './components/Pages/CreateProduct.jsx';
-import { createProduct } from './requests/createProducts.js';
+import { createProduct } from './requests/createProduct.js';
 import ProductLayout from './components/Pages/ProductLayout.jsx';
 import { loader as loadProduct } from './requests/loadProduct.js';
 import ProductDetails from './components/Pages/ProductDetails.jsx';
+import UpdateProduct from './components/Pages/UpdateProduct.jsx';
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <ProductDetails />
+      },
+      {
+        path: "update",
+        element: <UpdateProduct />
       }
     ]
   },

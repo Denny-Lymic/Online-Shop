@@ -23,9 +23,20 @@ export async function loader({ params }) {
                 return res.json();
             })
 
+        const categoriesPromise = fetch(`${import.meta.env.VITE_API_URL}/api/Products/Categories`, {
+            method: "GET"
+        })
+            .then(res => {
+                if (!res.ok) {
+                    return;
+                }
+                return res.json();
+            });
+
         return ({
             user: Promise.resolve(userPromise),
             product: Promise.resolve(productPromise),
+            categories: Promise.resolve(categoriesPromise),
         });
     }
     catch (e) {

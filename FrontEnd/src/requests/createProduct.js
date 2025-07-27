@@ -4,27 +4,8 @@ export async function createProduct({ request }) {
 
         const formData = await request.formData();
 
-        if (!formData.get("name") || typeof formData.get("name") !== "string") {
-            errors.name = "Пустое название";
-        }
-
         if (!formData.get("image")) {
             errors.image = "Нет фотографии";
-        }
-
-        if (!formData.get("description")) {
-            errors.description = "Нет описания";
-        }
-
-        if (!formData.get("category")) {
-            errors.category = "Выберите категорию";
-        }
-
-        if (!formData.get("price")) {
-            errors.price = "Укажите цену";
-        }
-
-        if (Object.keys(errors).length) {
             return { errors, imageBorderColor: "red.500" };
         }
 
