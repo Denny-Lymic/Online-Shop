@@ -7,12 +7,13 @@ import {
 import { useState } from "react";
 import { HiUpload } from "react-icons/hi"
 import { Form, useActionData, useLoaderData } from "react-router";
+import { templates } from "../descriptionTemplates"
 
 export default function CreateProduct() {
     const actionData = useActionData();
     const { categories } = useLoaderData();
 
-    const [category, setCategory] = useState();
+    const [category, setCategory] = useState("CPU");
     const [image, setImage] = useState({
         imageSrc: null
     });
@@ -37,7 +38,6 @@ export default function CreateProduct() {
         <Form method="POST" encType="multipart/form-data">
             <NavBar />
             <Center mt={20}>
-
                 <Stack w={{ base: "95vw", sm: "90vw", md: "80vw", lg: "60vw" }}>
                     <Text w="full" textAlign="center" textStyle="2xl" fontWeight="bold" mb={10}>Добавить продукт</Text>
                     <HStack>
@@ -112,6 +112,7 @@ export default function CreateProduct() {
                             </FileUpload.Root>
                         </Stack>
                         <Textarea
+                            key={category}
                             type="text"
                             required
                             onInvalid={(e) => e.target.setCustomValidity("Пожалуйста, заполните это поле")}
@@ -120,7 +121,7 @@ export default function CreateProduct() {
                             resize="none"
                             variant="subtle"
                             name="description"
-                            defaultValue={JSON.stringify(template, null, 2)}
+                            defaultValue={JSON.stringify(templates[category], null, 2)}
                         />
                     </HStack>
                     <Button mt={6} size="md" type="submit">Добавить</Button>
@@ -131,7 +132,7 @@ export default function CreateProduct() {
 }
 
 const template = {
-    tech: [
+    "Технические характеристики": [
         { name: "Линейка", value: "" },
         { name: "Разъем процессора (Socket)", value: "" },
         { name: "Совместимость", value: "" },
@@ -141,9 +142,8 @@ const template = {
         { name: "Максимальная тактовая частота", value: "" },
         { name: "Объём кэша L3", value: "" },
         { name: "Частота процессора", value: "" },
-        { name: "Частота процессора", value: "" },
     ],
-    kit: [
+    "Набор": [
         { name: "Охлаждение в комплекте", value: "" },
         { name: "Совместимые системы охлаждения", value: "" },
         { name: "Статус процессора", value: "" },

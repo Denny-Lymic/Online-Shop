@@ -27,7 +27,6 @@ export default function Catalog() {
                                 <LinkBox key={product.id}>
                                     <LinkOverlay as={Link} to={`product/${product.id}`}>
                                         <CardEntity
-
                                             imageSrc={product.imageUrl ? `${import.meta.env.VITE_API_URL}/images/products/${product.imageUrl}` : viteLogo}
                                             title={product.name}
                                             price={product.price}

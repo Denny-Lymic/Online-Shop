@@ -1,4 +1,4 @@
-import { Card, Text } from "@chakra-ui/react"
+import { Card, Text, Image, AspectRatio } from "@chakra-ui/react"
 
 export function CardEntity({ imageSrc, title, price }) {
     return (
@@ -6,11 +6,17 @@ export function CardEntity({ imageSrc, title, price }) {
             className="Card flex flex-col w-full"
             transition="box-shadow 0.2s ease"
             _hover={{
-                boxShadow: "0 0 7px 7px rgba(0, 0, 0, 0.2)", // готовая пресет-тень от Chakra
+                boxShadow: "0 0 9px 9px rgba(0, 0, 0, 0.15)", // готовая пресет-тень от Chakra
             }}
         >
             <Card.Header>
-                <img src={imageSrc} className="card_image h-12 object-contain" alt="Card Image" />
+                <AspectRatio ratio={1}>
+                    <Image
+                        src={imageSrc}
+                        className="card_image h-12 object-contain"
+                        alt="Card Image"
+                    />
+                </AspectRatio>
             </Card.Header>
             <Card.Body>
                 <Text
