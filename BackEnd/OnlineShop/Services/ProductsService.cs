@@ -177,11 +177,11 @@ namespace OnlineShop.Services
             return result;
         }
 
-        public async Task<ServiceResult> UpdateProductAsync(int id, UpdateProductDto productDto)
+        public async Task<ServiceResult> UpdateProductAsync(UpdateProductDto productDto)
         {
             var result = new ServiceResult();
 
-            var existingProduct = await _productsRepository.GetByIdAsync(id);
+            var existingProduct = await _productsRepository.GetByIdAsync(productDto.Id);
 
             if (existingProduct == null)
             {
@@ -211,11 +211,26 @@ namespace OnlineShop.Services
             if (!productDto.Price.HasValue)
                 productDto.Price = existingProduct.Price;
 
-            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "products", existingProduct.ImageUrl);
-            if (File.Exists(oldImagePath))
-                File.Delete(oldImagePath);
+            if (productDto.Image == null || productDto.Image.Length == 0)
+            {
+                productDto.ImageUrl = existingProduct.ImageUrl;
+            }
+            else
+            {
+                var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "products", existingProduct.ImageUrl);
+                if (File.Exists(oldImagePath))
+                    File.Delete(oldImagePath);
 
-            await _productsRepository.UpdateAsync(id, productDto);
+                var extension = Path.GetExtension(productDto.Image.FileName);
+                var newName = $"{Guid.NewGuid()}{extension}";
+                var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "products", newName);
+                productDto.ImageUrl = newName;
+
+                await using var stream = new FileStream(filePath, FileMode.Create);
+                await productDto.Image.CopyToAsync(stream);
+            }
+
+            await _productsRepository.UpdateAsync(productDto);
 
             return result;
         }
@@ -241,7 +256,7 @@ namespace OnlineShop.Services
                 var newName = $"{Guid.NewGuid()}{extension}";
                 var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "products", newName);
 
-                await UpdateProductAsync(imageRequest.productId, new UpdateProductDto { ImageUrl = newName });
+                await UpdateProductAsync(new UpdateProductDto { Id = imageRequest.productId, ImageUrl = newName });
 
                 await using var stream = new FileStream(filePath, FileMode.Create);
                 await imageRequest.Image.CopyToAsync(stream);

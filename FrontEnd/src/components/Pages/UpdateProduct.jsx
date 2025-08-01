@@ -6,7 +6,6 @@ import viteLogo from "/vite.svg"
 
 export default function UpdateProduct() {
     const { categories, product } = useOutletContext();
-    console.log(product);
 
     return (
         <Suspense>

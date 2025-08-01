@@ -107,10 +107,11 @@ namespace OnlineShop.Controllers
         }
 
         [HttpPatch]
-        [Route("Update/{productId:int}")]
-        public async Task<IActionResult> UpdateProduct(int productId, [FromBody] UpdateProductDto productDto)
+        [Consumes("multipart/form-data")]
+        [Route("Update")]
+        public async Task<IActionResult> UpdateProduct([FromForm] UpdateProductDto productDto)
         {
-            var result = await _productsService.UpdateProductAsync(productId, productDto);
+            var result = await _productsService.UpdateProductAsync(productDto);
 
             if (!result.isSuccess)
             {

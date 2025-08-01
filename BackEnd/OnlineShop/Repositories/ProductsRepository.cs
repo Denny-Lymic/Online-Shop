@@ -119,10 +119,10 @@ namespace OnlineShop.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(int id, UpdateProductDto productDto)
+        public async Task UpdateAsync(UpdateProductDto productDto)
         {
             await _context.Products
-                .Where(p => p.Id == id)
+                .Where(p => p.Id == productDto.Id)
                 .ExecuteUpdateAsync(p => p
                     .SetProperty(x => x.Name, productDto.Name)
                     .SetProperty(x => x.Category, productDto.Category)

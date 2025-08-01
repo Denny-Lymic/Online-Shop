@@ -1,4 +1,4 @@
-import { Grid, Skeleton } from "@chakra-ui/react"
+import { Grid, Skeleton, Box } from "@chakra-ui/react"
 import { CardEntity } from "./Card"
 import viteLogo from '/vite.svg'
 
@@ -12,11 +12,15 @@ export default function SkeletonLoad({ columns }) {
                     css={{
                         "--start-color": "colors.gray.200",
                         "--end-color": "colors.gray.300",
-                    }}>
+                    }}
+                    width="full"
+                    height="auto"
+                    minH="250px"
+                >
                     <CardEntity
                         key={index}
                         imageSrc={viteLogo}
-                        title="TitleTitle"
+                        title="TitleTiasdasd"
                         price="Price"
                     />
                 </Skeleton>

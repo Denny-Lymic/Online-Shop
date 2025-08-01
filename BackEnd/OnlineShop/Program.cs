@@ -6,6 +6,7 @@ using OnlineShop.Repositories;
 using OnlineShop.Services;
 using OnlineShop.Models;
 using OnlineShop.Extensions;
+using BackEnd.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,8 @@ var connectionString = builder.Configuration.GetConnectionString("ShopDbConnecti
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddHttpLogging(_ => { });
 
 builder.Services.AddScoped<ProductsRepository>();
 builder.Services.AddScoped<OrdersRepository>();
@@ -58,15 +61,6 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-app.UseCors("AllowLocal");
-
-app.UseDeveloperExceptionPage();
-app.UseSwagger();
-app.UseSwaggerUI(options => // UseSwaggerUI is called only in Development.
-{
-    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-});
-
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -74,14 +68,28 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+else
+{
+    app.UseDeveloperExceptionPage();
+}
+
+app.UseException();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseCors("AllowLocal");
+
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSwagger();
+app.UseSwaggerUI(options => // UseSwaggerUI is called only in Development.
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+});
 
 app.MapControllerRoute(
     name: "default",

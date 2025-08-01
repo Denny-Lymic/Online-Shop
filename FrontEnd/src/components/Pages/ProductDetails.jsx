@@ -3,6 +3,7 @@ import { Await, Link, useNavigation } from "react-router";
 import { useOutletContext } from "react-router";
 import viteLogo from "/vite.svg"
 import { Suspense } from "react";
+import React from "react";
 
 export default function ProductDetails() {
     const { product } = useOutletContext();
@@ -119,13 +120,13 @@ export default function ProductDetails() {
                                         <Text fontWeight="semibold" fontSize="xl" pb={5} mt={10}>{category}</Text>
 
                                         {items.map(item => (
-                                            <>
-                                                <Stack key={item.name} direction={{ base: "column", md: "column", lg: "row" }} my={2}>
+                                            <React.Fragment key={item.name}>
+                                                <Stack direction={{ base: "column", md: "column", lg: "row" }} my={2}>
                                                     <Box minW={400} fontWeight="500">{item.name}</Box>
                                                     <Box flex="1">{item.value}</Box>
                                                 </Stack>
                                                 <Separator />
-                                            </>
+                                            </React.Fragment>
                                         ))}
                                     </Stack>
                                 ))
