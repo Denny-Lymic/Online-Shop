@@ -16,7 +16,7 @@ export async function createProduct({ request }) {
             })
             .then(res => {
                 if (!res.ok) {
-                    const data = res.json();
+                    // const data = res.json();
                     return;
                 }
                 return res.json();

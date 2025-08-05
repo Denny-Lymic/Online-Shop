@@ -1,7 +1,6 @@
 import { HStack, Stack, Field, Input, Text, NumberInput, NativeSelect, Center } from "@chakra-ui/react";
 import { Form, useLoaderData } from "react-router";
 import PriceSlider from "./Slider";
-import { useState } from "react";
 
 export default function FilterForm({ filterState, setFilterState, sliderRangeStr, setSliderRangeStr }) {
     const { categories, maxPrice } = useLoaderData();

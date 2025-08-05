@@ -1,7 +1,7 @@
 name: Check
 on: push
 jobs:
-    build:
+    dotnet:
         runs-on: ubuntu-latest
         defaults:
             run:
@@ -19,3 +19,15 @@ jobs:
               run: dotnet build --no-restore
             - name: Test
               run: dotnet test --no-build --verbosity normal
+    vite:
+      runs-on: ubuntu-latest
+      defaults:
+        run:
+          working-directory: FrontEnd
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+        - name: Install deps
+          uses: npm ci
+        - name: Lint
+          uses: npm run lint

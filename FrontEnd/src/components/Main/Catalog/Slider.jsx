@@ -1,11 +1,11 @@
-import { Slider as ChakraSlider, useSlider } from "@chakra-ui/react"
+import { Slider as ChakraSlider } from "@chakra-ui/react"
 import { useMemo } from "react";
 
 export default function PriceSlider({ value: rangeStr, onChange, max = 30000 }) {
     const numericRange = useMemo(() => [
         Number(rangeStr[0]),
         Number(rangeStr[1])
-    ], [rangeStr, max]);
+    ], [rangeStr]);
 
     return (
         <ChakraSlider.Root

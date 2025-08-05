@@ -1,5 +1,5 @@
 import { Center, Stack, AspectRatio, Image, Card, Button, Text, Span, Box, Separator } from "@chakra-ui/react";
-import { Await, Link, useNavigation } from "react-router";
+import { Await, Link } from "react-router";
 import { useOutletContext } from "react-router";
 import viteLogo from "/vite.svg"
 import { Suspense } from "react";
@@ -7,8 +7,8 @@ import React from "react";
 
 export default function ProductDetails() {
     const { product } = useOutletContext();
-    const navigation = useNavigation();
-    const isBusy = navigation.state !== "idle";
+    // const navigation = useNavigation();
+    // const isBusy = navigation.state !== "idle";
 
     return (
         <Suspense>

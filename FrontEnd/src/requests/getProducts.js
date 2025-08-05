@@ -2,7 +2,7 @@ export async function getProducts({ request }) {
     try {
         const formData = await request.formData();
 
-        const filter = Array.from(formData.entries()).filter(([key, value]) => value !== "" && value !== "0");
+        const filter = Array.from(formData.entries()).filter(([, value]) => value !== "" && value !== "0");
 
         const searchParams = new URLSearchParams(filter).toString();
 

@@ -13,7 +13,7 @@ export async function updateProduct({ request, params }) {
         )
             .then(res => {
                 if (!res.ok) {
-                    const data = res.json();
+                    // const data = res.json();
                     return;
                 }
                 return res.json();
