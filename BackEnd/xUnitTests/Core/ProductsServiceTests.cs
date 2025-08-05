@@ -5,6 +5,7 @@ using Moq;
 using OnlineShop.DTO.Product;
 using OnlineShop.Entities;
 using OnlineShop.Services;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace xUnitTests.Core
 {
@@ -28,7 +29,7 @@ namespace xUnitTests.Core
         }
 
         [Fact]
-        public async Task ServiceAddAsync_CorrectDto_AddsProducts()
+        public async Task ServiceAddProductAsync_CorrectDto_AddsProducts()
         {
             // arange
 
@@ -42,7 +43,6 @@ namespace xUnitTests.Core
                 Name = "Ryzen 5600",
                 Category = "CPU",
                 Price = 5000,
-                ImageUrl = "5aa7ad6b-0cdb-4dda-bd80-52ce9e538145.png",
                 Description = "Description",
                 Image = ImageStub.GetFormFile()
             };
@@ -63,7 +63,7 @@ namespace xUnitTests.Core
         }
 
         [Fact]
-        public async Task ServiceAddAsync_ProductAlreadyExists_AddsProducts()
+        public async Task ServiceAddProductAsync_ProductAlreadyExists_ShouldBeError()
         {
             // arange
 
@@ -75,7 +75,6 @@ namespace xUnitTests.Core
                 Name = "Ryzen 5600",
                 Category = "CPU",
                 Price = 5000,
-                ImageUrl = "5aa7ad6b-0cdb-4dda-bd80-52ce9e538145.png",
                 Description = "Description",
                 Image = ImageStub.GetFormFile()
             };
@@ -95,7 +94,7 @@ namespace xUnitTests.Core
         }
 
         [Fact]
-        public async Task ServiceAddAsync_IncorrectProduct_AddsProducts()
+        public async Task ServiceAddProductAsync_IncorrectProduct_ShouldBeError()
         {
             // arange
 
@@ -122,6 +121,149 @@ namespace xUnitTests.Core
             _repoMock.Verify(r => r.AddAsync(It.IsAny<CreateProductDto>()), Times.Never);
 
             (productDto.Image.OpenReadStream() as MemoryStream)?.Dispose();
+        }
+
+        [Fact]
+        public async Task ServiceUpdateProductAsync_CorrectDto_UpdatesProduct()
+        {
+            // arange
+
+            var productDto = new UpdateProductDto
+            {
+                Name = "Ryzen 5600",
+                Category = "CPU",
+                Price = 5000,
+                Description = "Description",
+                Image = ImageStub.GetFormFile()
+            };
+
+            _repoMock.Setup(r => r.GetByIdAsync(It.IsAny<int>()))
+                .ReturnsAsync(new ProductEntity
+                {
+                    Name = "Ryzen 5600",
+                    Category = "CPU",
+                    Price = 5000,
+                });
+            _repoMock.Setup(r => r.UpdateAsync(It.IsAny<UpdateProductDto>()))
+                .Returns(Task.CompletedTask);
+            
+            // act
+
+            var result = await _sut.UpdateProductAsync(productDto);
+
+            // assert
+
+            Assert.True(result.isSuccess);
+
+            _repoMock.Verify(r => r.UpdateAsync(It.IsAny<UpdateProductDto>()), Times.Once);
+            _repoMock.Verify(r => r.GetByIdAsync(It.IsAny<int>()), Times.Once);
+
+            var saved = Path.Combine(_fe.Env.WebRootPath, "images", "products", productDto.ImageUrl!);
+            Assert.True(Path.Exists(saved));
+
+            (productDto.Image.OpenReadStream() as MemoryStream)?.Dispose();
+        }
+
+        [Fact]
+        public async Task ServiceUpdateProductAsync_EmptyDto_ShouldBeError()
+        {
+            // arange
+
+            _repoMock.Setup(r => r.GetByIdAsync(It.IsAny<int>()))
+                .ReturnsAsync((ProductEntity ?) null);
+            
+            // act
+
+            var result = await _sut.UpdateProductAsync(new UpdateProductDto());
+
+            // assert
+
+            Assert.False(result.isSuccess);
+            Assert.Contains("Product not found.", result.Errors);
+
+            _repoMock.Verify(r => r.UpdateAsync(It.IsAny<UpdateProductDto>()), Times.Never);
+        }
+
+        [Fact]
+        public async Task ServiceUpdateProductAsync_SameNameAsExistingProduct_ShouldBeError()
+        {
+            // arange
+
+            var product = new UpdateProductDto
+            {
+                Name = "Ryzen 7600X",
+                Category = "CPU",
+                Price = 5000,
+                Description = "Description",
+                Image = ImageStub.GetFormFile()
+            };
+
+            _repoMock.Setup(r => r.GetByIdAsync(It.IsAny<int>()))
+                .ReturnsAsync(new ProductEntity
+                {
+                    Name = "Ryzen 5600",
+                    Category = "CPU",
+                    Price = 5000,
+                });
+
+            _repoMock.Setup(r => r.GetByNameAsync(It.IsAny<string>()))
+                .ReturnsAsync(new ProductEntity 
+                {
+                    Name = "Ryzen 7600X",
+                    Category = "CPU",
+                    Price = 10000,
+                });
+
+            // act
+
+            var result = await _sut.UpdateProductAsync(product);
+
+            // assert
+
+            Assert.False(result.isSuccess);
+            Assert.Contains("This product name is already exist", result.Errors);
+
+            _repoMock.Verify(r => r.UpdateAsync(It.IsAny<UpdateProductDto>()), Times.Never);
+        }
+
+        [Fact]
+        public async Task ServiceDeleteProductAsync_CorrectId_DeletingProduct() {
+            // arange
+
+            _repoMock.Setup(r => r.GetByIdAsync(It.IsAny<int>()))
+                .ReturnsAsync(new ProductEntity
+                {
+                    Name = "Ryzen",
+                });
+            _repoMock.Setup(r => r.DeleteAsync(It.IsAny<int>()))
+                .Returns(Task.CompletedTask);
+
+            // act
+
+            var result = await _sut.DeleteProductAsync(It.IsAny<int>());
+
+            // assert
+
+            Assert.True(result.isSuccess);
+            _repoMock.Verify(r => r.DeleteAsync(It.IsAny<int>()), Times.Once());
+        }
+
+        [Fact]
+        public async Task ServiceDeleteProductAsync_IncorrectId_ShouldBeError()
+        {
+            // arange
+
+            _repoMock.Setup(r => r.GetByIdAsync(It.IsAny<int>()))
+                .ReturnsAsync((ProductEntity ?) null);
+
+            // act
+
+            var result = await _sut.DeleteProductAsync(It.IsAny<int>());
+
+            // assert
+
+            Assert.False(result.isSuccess);
+            _repoMock.Verify(r => r.DeleteAsync(It.IsAny<int>()), Times.Never());
         }
     }
 }

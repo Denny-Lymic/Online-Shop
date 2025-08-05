@@ -201,6 +201,7 @@ namespace OnlineShop.Services
                         && string.Equals(existingProductByName.Name, productDto.Name, StringComparison.OrdinalIgnoreCase))
                     {
                         result.Errors.Add("This product name is already exist");
+                        return result;
                     }
                 }
             }
