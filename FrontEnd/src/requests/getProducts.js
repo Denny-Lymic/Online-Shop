@@ -21,6 +21,6 @@ export async function getProducts({ request }) {
         };
     }
     catch (error) {
-        console.error("Error in getProducts:", error);
+        console.error("Error in getProducts", error);
     }
 }
