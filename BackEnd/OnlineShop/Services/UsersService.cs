@@ -1,4 +1,6 @@
-﻿using OnlineShop.DTO.Order;
+﻿using BackEnd.Interfaces.Repositories;
+using BackEnd.Interfaces.Services;
+using OnlineShop.DTO.Order;
 using OnlineShop.DTO.User;
 using OnlineShop.Interfaces;
 using OnlineShop.Models;
@@ -7,14 +9,14 @@ using System.Text.RegularExpressions;
 
 namespace OnlineShop.Services
 {
-    public class UsersService
+    public class UsersService : IUsersService
     {
-        private readonly UsersRepository _usersRepository;
+        private readonly IUsersRepository _usersRepository;
         private readonly IPasswordHasher _passwordHasher;
         private readonly JwtProvider _jwtProvider;
 
         public UsersService(
-            UsersRepository usersRepository, 
+            IUsersRepository usersRepository,
             IPasswordHasher passwordHasher,
             JwtProvider jwtProvider)
         {
@@ -27,7 +29,7 @@ namespace OnlineShop.Services
         {
             var user = await _usersRepository.GetByIdWithOrdersAsync(userId);
 
-            if(user == null)
+            if (user == null)
             {
                 return null;
             }
@@ -41,7 +43,7 @@ namespace OnlineShop.Services
                 {
                     OrderId = o.Id,
                     OrderDate = o.OrderDate,
-                    OrderStatus = o.Status,                  
+                    OrderStatus = o.Status,
                     ProductId = o.ProductId,
                     ProductName = o.Product?.Name ?? "Unknown"
                 }).ToList()
@@ -69,7 +71,7 @@ namespace OnlineShop.Services
         {
             var user = await _usersRepository.GetByEmailAsync(email);
 
-            if(user == null)
+            if (user == null)
             {
                 return null;
             }
@@ -86,7 +88,7 @@ namespace OnlineShop.Services
         {
             var users = await _usersRepository.GetAllAsync();
 
-            if(users == null)
+            if (users == null)
             {
                 return new List<UserDto>();
             }
@@ -159,7 +161,7 @@ namespace OnlineShop.Services
                 return result;
             }
 
-            if(string.IsNullOrEmpty(userDto.Name))
+            if (string.IsNullOrEmpty(userDto.Name))
             {
                 userDto.Name = existingUser.Name;
             }

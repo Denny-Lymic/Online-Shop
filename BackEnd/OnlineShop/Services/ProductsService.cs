@@ -1,16 +1,18 @@
 ﻿using BackEnd.DTO.Product;
+using BackEnd.Interfaces.Repositories;
+using BackEnd.Interfaces.Services;
 using OnlineShop.DTO.Product;
 using OnlineShop.Models;
 using OnlineShop.Repositories;
 
 namespace OnlineShop.Services
 {
-    public class ProductsService
+    public class ProductsService : IProductsService
     {
-        private readonly ProductsRepository _productsRepository;
+        private readonly IProductsRepository _productsRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductsService(ProductsRepository productsRepository, IWebHostEnvironment webHostEnvironment)
+        public ProductsService(IProductsRepository productsRepository, IWebHostEnvironment webHostEnvironment)
         {
             _productsRepository = productsRepository;
             _webHostEnvironment = webHostEnvironment;
@@ -74,7 +76,7 @@ namespace OnlineShop.Services
                 Name = p.Name,
                 Category = p.Category,
                 Price = p.Price,
-                ImageUrl= p.ImageUrl,
+                ImageUrl = p.ImageUrl,
             }).ToList();
 
             return productDtos;
@@ -167,12 +169,12 @@ namespace OnlineShop.Services
             var extension = Path.GetExtension(productDto.Image.FileName);
             var newName = $"{Guid.NewGuid()}{extension}";
             var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "products", newName);
-            productDto.ImageUrl = newName;
-
-            await _productsRepository.AddAsync(productDto);
 
             await using var stream = new FileStream(filePath, FileMode.Create);
             await productDto.Image.CopyToAsync(stream);
+
+            productDto.ImageUrl = newName;
+            await _productsRepository.AddAsync(productDto);
 
             return result;
         }

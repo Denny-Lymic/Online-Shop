@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using BackEnd.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.DTO.User;
 using OnlineShop.Services;
@@ -9,9 +10,9 @@ namespace OnlineShop.Controllers
     [Route("api/[controller]")]
     public class UsersController : Controller
     {
-        private readonly UsersService _usersService;
+        private readonly IUsersService _usersService;
 
-        public UsersController(UsersService usersService)
+        public UsersController(IUsersService usersService)
         {
             _usersService = usersService;
         }

@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BackEnd.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 using OnlineShop.Data;
 using OnlineShop.DTO.User;
 using OnlineShop.Entities;
 
 namespace OnlineShop.Repositories
 {
-    public class UsersRepository
+    public class UsersRepository : IUsersRepository
     {
         private readonly ShopDbContext _context;
         public UsersRepository(ShopDbContext context)

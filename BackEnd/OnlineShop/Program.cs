@@ -7,6 +7,9 @@ using OnlineShop.Services;
 using OnlineShop.Models;
 using OnlineShop.Extensions;
 using BackEnd.Middlewares;
+using BackEnd.Interfaces.Services;
+using BackEnd.Services;
+using BackEnd.Interfaces.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,13 +20,13 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpLogging(_ => { });
 
-builder.Services.AddScoped<ProductsRepository>();
-builder.Services.AddScoped<OrdersRepository>();
-builder.Services.AddScoped<UsersRepository>();
+builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
+builder.Services.AddScoped<IOrdersRepository, OrdersRepository>();
+builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 
-builder.Services.AddScoped<ProductsService>();
-builder.Services.AddScoped<OrdersService>();
-builder.Services.AddScoped<UsersService>();
+builder.Services.AddScoped<IProductsService, ProductsService>();
+builder.Services.AddScoped<IOrdersService, OrdersService>();
+builder.Services.AddScoped<IUsersService, UsersService>();
 
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<JwtProvider>();
@@ -71,12 +74,18 @@ if (!app.Environment.IsDevelopment())
 else
 {
     app.UseDeveloperExceptionPage();
+
+    app.UseSwagger();
+    app.UseSwaggerUI(options => // UseSwaggerUI is called only in Development.
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    });
 }
 
 app.UseException();
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+app.MapStaticAssets();
 
 app.UseRouting();
 
@@ -84,12 +93,6 @@ app.UseCors("AllowLocal");
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.UseSwagger();
-app.UseSwaggerUI(options => // UseSwaggerUI is called only in Development.
-{
-    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-});
 
 app.MapControllerRoute(
     name: "default",

@@ -1,4 +1,5 @@
 ﻿using BackEnd.DTO.Product;
+using BackEnd.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.DTO.Product;
 using OnlineShop.Models;
@@ -10,9 +11,9 @@ namespace OnlineShop.Controllers
     [Route("api/[controller]")]
     public class ProductsController : Controller
     {
-        private readonly ProductsService _productsService;
+        private readonly IProductsService _productsService;
 
-        public ProductsController(ProductsService productsService)
+        public ProductsController(IProductsService productsService)
         {
             _productsService = productsService;
         }

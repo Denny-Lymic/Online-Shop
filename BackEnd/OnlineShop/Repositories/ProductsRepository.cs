@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BackEnd.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 using OnlineShop.Data;
 using OnlineShop.DTO.Product;
 using OnlineShop.Entities;
@@ -6,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace OnlineShop.Repositories
 {
-    public class ProductsRepository
+    public class ProductsRepository : IProductsRepository
     {
         private readonly ShopDbContext _context;
         public ProductsRepository(ShopDbContext context)
@@ -78,7 +79,7 @@ namespace OnlineShop.Repositories
 
             var query = _context.Products.AsNoTracking();
 
-            if(!string.IsNullOrEmpty(category))
+            if (!string.IsNullOrEmpty(category))
             {
                 query = query.Where(p => EF.Functions.Like(p.Category, $"{category}"));
             }

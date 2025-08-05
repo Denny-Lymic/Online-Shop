@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BackEnd.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 using OnlineShop.Data;
 using OnlineShop.DTO.Order;
 using OnlineShop.Entities;
 
 namespace OnlineShop.Repositories
 {
-    public class OrdersRepository
+    public class OrdersRepository : IOrdersRepository
     {
         private readonly ShopDbContext _context;
 

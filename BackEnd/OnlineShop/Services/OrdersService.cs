@@ -1,17 +1,19 @@
-﻿using OnlineShop.DTO.Order;
+﻿using BackEnd.Interfaces.Repositories;
+using BackEnd.Interfaces.Services;
+using OnlineShop.DTO.Order;
 using OnlineShop.Entities;
 using OnlineShop.Models;
 using OnlineShop.Repositories;
 
-namespace OnlineShop.Services
+namespace BackEnd.Services
 {
-    public class OrdersService
+    public class OrdersService : IOrdersService
     {
-        private readonly OrdersRepository _ordersRepository;
-        private readonly UsersRepository _usersRepository;
-        private readonly ProductsRepository _productsRepository;
+        private readonly IOrdersRepository _ordersRepository;
+        private readonly IUsersRepository _usersRepository;
+        private readonly IProductsRepository _productsRepository;
 
-        public OrdersService(OrdersRepository ordersRepository, UsersRepository usersRepository, ProductsRepository productsRepository)
+        public OrdersService(IOrdersRepository ordersRepository, IUsersRepository usersRepository, IProductsRepository productsRepository)
         {
             _ordersRepository = ordersRepository;
             _usersRepository = usersRepository;
@@ -29,7 +31,7 @@ namespace OnlineShop.Services
 
             var ordersDto = new List<OrderDto>();
 
-            foreach (var order in orders) 
+            foreach (var order in orders)
             {
                 ordersDto.Add(new OrderDto
                 {
@@ -122,7 +124,7 @@ namespace OnlineShop.Services
             {
                 Id = orderId,
                 Status = status
-            };  
+            };
 
             await _ordersRepository.UpdateByIdAsync(newOrder);
 

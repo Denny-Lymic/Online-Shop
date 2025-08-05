@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BackEnd.Interfaces.Services;
+using BackEnd.Services;
+using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Entities;
-using OnlineShop.Services;
 
 namespace OnlineShop.Controllers
 {
@@ -8,9 +9,9 @@ namespace OnlineShop.Controllers
     [Route("api/[controller]")]
     public class OrdersController : Controller
     {
-        private readonly OrdersService _ordersService;
+        private readonly IOrdersService _ordersService;
 
-        public OrdersController(OrdersService ordersService)
+        public OrdersController(IOrdersService ordersService)
         {
             _ordersService = ordersService;
         }
