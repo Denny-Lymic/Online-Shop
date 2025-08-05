@@ -5,7 +5,7 @@ jobs:
         runs-on: ubuntu-latest
         defaults:
             run:
-                working-directory: ./Backend
+                working-directory: Backend
         steps: 
             - name: Checkout
               uses: actions/checkout@v4
