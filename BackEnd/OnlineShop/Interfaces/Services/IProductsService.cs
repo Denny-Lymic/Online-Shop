@@ -1,6 +1,5 @@
 ﻿using BackEnd.DTO.Product;
-using OnlineShop.DTO.Product;
-using OnlineShop.Models;
+using BackEnd.Models;
 
 namespace BackEnd.Interfaces.Services
 {

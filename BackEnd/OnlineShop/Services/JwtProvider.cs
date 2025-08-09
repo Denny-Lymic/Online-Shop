@@ -1,12 +1,12 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using OnlineShop.DTO.User;
-using OnlineShop.Models;
+using BackEnd.DTO.User;
+using BackEnd.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace OnlineShop.Services
+namespace BackEnd.Services
 {
     public class JwtProvider
     {

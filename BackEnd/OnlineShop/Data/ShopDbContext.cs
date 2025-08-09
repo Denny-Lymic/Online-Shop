@@ -1,9 +1,8 @@
 ﻿using BackEnd.Entities;
 using Microsoft.EntityFrameworkCore;
-using OnlineShop.Configurations;
-using OnlineShop.Entities;
+using BackEnd.Configurations;
 
-namespace OnlineShop.Data
+namespace BackEnd.Data
 {
     public class ShopDbContext : DbContext
     {

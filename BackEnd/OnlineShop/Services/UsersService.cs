@@ -1,13 +1,13 @@
 ﻿using BackEnd.Interfaces.Repositories;
 using BackEnd.Interfaces.Services;
-using OnlineShop.DTO.Order;
-using OnlineShop.DTO.User;
-using OnlineShop.Interfaces;
-using OnlineShop.Models;
-using OnlineShop.Repositories;
+using BackEnd.DTO.Order;
+using BackEnd.DTO.User;
+using BackEnd.Interfaces;
+using BackEnd.Models;
+using BackEnd.Repositories;
 using System.Text.RegularExpressions;
 
-namespace OnlineShop.Services
+namespace BackEnd.Services
 {
     public class UsersService : IUsersService
     {

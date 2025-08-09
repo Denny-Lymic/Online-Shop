@@ -1,11 +1,8 @@
 ﻿using BackEnd.DTO.Product;
 using BackEnd.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShop.DTO.Product;
-using OnlineShop.Models;
-using OnlineShop.Services;
 
-namespace OnlineShop.Controllers
+namespace BackEnd.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace OnlineShop.Configurations
+namespace BackEnd.Configurations
 {
     public class CategoryDbConfiguration : IEntityTypeConfiguration<CategoryEntity>
     {

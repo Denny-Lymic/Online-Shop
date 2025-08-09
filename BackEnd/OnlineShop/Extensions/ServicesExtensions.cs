@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using OnlineShop.Models;
+using BackEnd.Models;
 using System.Text;
 
-namespace OnlineShop.Extensions
+namespace BackEnd.Extensions
 {
     public static class ServicesExtensions
     {

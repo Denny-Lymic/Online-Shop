@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace OnlineShop.Migrations
+namespace BackEnd.Migrations
 {
     /// <inheritdoc />
     public partial class Unique_fields_and_longer_pass : Migration

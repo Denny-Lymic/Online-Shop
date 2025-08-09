@@ -1,5 +1,5 @@
-﻿using OnlineShop.DTO.User;
-using OnlineShop.Entities;
+﻿using BackEnd.DTO.User;
+using BackEnd.Entities;
 
 namespace BackEnd.Interfaces.Repositories
 {

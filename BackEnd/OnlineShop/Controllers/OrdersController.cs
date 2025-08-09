@@ -1,9 +1,9 @@
 ﻿using BackEnd.Interfaces.Services;
 using BackEnd.Services;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShop.Entities;
+using BackEnd.Entities;
 
-namespace OnlineShop.Controllers
+namespace BackEnd.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

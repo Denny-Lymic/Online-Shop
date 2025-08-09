@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using OnlineShop.DTO.Product;
-using OnlineShop.Entities;
-using OnlineShop.Repositories;
+using BackEnd.DTO.Product;
+using BackEnd.Entities;
+using BackEnd.Repositories;
 
 namespace xUnitTests.Data
 {

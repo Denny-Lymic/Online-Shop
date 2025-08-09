@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using OnlineShop.Data;
+using BackEnd.Data;
 
 #nullable disable
 
-namespace OnlineShop.Migrations
+namespace BackEnd.Migrations
 {
     [DbContext(typeof(ShopDbContext))]
     [Migration("20250702122824_Unique_fields_and_longer_pass")]

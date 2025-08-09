@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace OnlineShop.Migrations
+namespace BackEnd.Migrations
 {
     /// <inheritdoc />
     public partial class Categories_And_Img_url : Migration

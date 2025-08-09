@@ -1,11 +1,9 @@
 ﻿using BackEnd.DTO.Product;
 using BackEnd.Interfaces.Repositories;
 using BackEnd.Interfaces.Services;
-using OnlineShop.DTO.Product;
-using OnlineShop.Models;
-using OnlineShop.Repositories;
+using BackEnd.Models;
 
-namespace OnlineShop.Services
+namespace BackEnd.Services
 {
     public class ProductsService : IProductsService
     {

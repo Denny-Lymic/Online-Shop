@@ -1,9 +1,9 @@
 ﻿using BackEnd.Interfaces.Repositories;
 using BackEnd.Interfaces.Services;
-using OnlineShop.DTO.Order;
-using OnlineShop.Entities;
-using OnlineShop.Models;
-using OnlineShop.Repositories;
+using BackEnd.DTO.Order;
+using BackEnd.Entities;
+using BackEnd.Models;
+using BackEnd.Repositories;
 
 namespace BackEnd.Services
 {

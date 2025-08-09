@@ -1,4 +1,4 @@
-﻿namespace OnlineShop.Entities
+﻿namespace BackEnd.Entities
 {
     public class OrderEntity
     {

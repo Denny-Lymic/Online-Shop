@@ -1,21 +1,27 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using OnlineShop.Data;
-using OnlineShop.Interfaces;
-using OnlineShop.Repositories;
-using OnlineShop.Services;
-using OnlineShop.Models;
-using OnlineShop.Extensions;
+using DotNetEnv;
+using BackEnd.Data;
+using BackEnd.Interfaces;
+using BackEnd.Repositories;
+using BackEnd.Services;
+using BackEnd.Models;
+using BackEnd.Extensions;
 using BackEnd.Middlewares;
 using BackEnd.Interfaces.Services;
-using BackEnd.Services;
 using BackEnd.Interfaces.Repositories;
+
+//Copy api.env to enviroment
+var aspEnv = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
+if (aspEnv == "Development" && File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "api.env")))
+{
+    Env.NoClobber().Load("api.env");
+}
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("ShopDbConnection") ?? throw new InvalidOperationException("Connection string 'ShopDbConnection' not found."); ;
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpLogging(_ => { });

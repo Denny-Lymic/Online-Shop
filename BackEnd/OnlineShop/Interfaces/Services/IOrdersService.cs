@@ -1,6 +1,6 @@
-﻿using OnlineShop.DTO.Order;
-using OnlineShop.Entities;
-using OnlineShop.Models;
+﻿using BackEnd.DTO.Order;
+using BackEnd.Entities;
+using BackEnd.Models;
 
 namespace BackEnd.Interfaces.Services
 {

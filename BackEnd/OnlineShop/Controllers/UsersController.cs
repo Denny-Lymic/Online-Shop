@@ -1,10 +1,10 @@
 ﻿using BackEnd.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShop.DTO.User;
-using OnlineShop.Services;
+using BackEnd.DTO.User;
+using BackEnd.Services;
 
-namespace OnlineShop.Controllers
+namespace BackEnd.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

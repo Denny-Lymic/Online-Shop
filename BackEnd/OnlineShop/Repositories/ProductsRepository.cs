@@ -1,11 +1,11 @@
 ﻿using BackEnd.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
-using OnlineShop.Data;
-using OnlineShop.DTO.Product;
-using OnlineShop.Entities;
+using BackEnd.Data;
+using BackEnd.DTO.Product;
+using BackEnd.Entities;
 using System.Linq.Expressions;
 
-namespace OnlineShop.Repositories
+namespace BackEnd.Repositories
 {
     public class ProductsRepository : IProductsRepository
     {

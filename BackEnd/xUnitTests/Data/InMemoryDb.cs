@@ -1,6 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using OnlineShop.Data;
+using BackEnd.Data;
 
 
 namespace xUnitTests.Data

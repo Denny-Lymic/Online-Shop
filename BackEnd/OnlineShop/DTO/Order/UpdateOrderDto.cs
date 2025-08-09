@@ -1,6 +1,6 @@
-﻿using OnlineShop.Entities;
+﻿using BackEnd.Entities;
 
-namespace OnlineShop.DTO.Order
+namespace BackEnd.DTO.Order
 {
     public class UpdateOrderDto
     {

@@ -1,4 +1,4 @@
-﻿namespace OnlineShop.Interfaces
+﻿namespace BackEnd.Interfaces
 {
     public interface IPasswordHasher
     {

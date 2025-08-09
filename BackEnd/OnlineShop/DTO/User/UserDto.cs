@@ -1,6 +1,6 @@
-﻿using OnlineShop.DTO.Order;
+﻿using BackEnd.DTO.Order;
 
-namespace OnlineShop.DTO.User
+namespace BackEnd.DTO.User
 {
     public class UserDto
     {

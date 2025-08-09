@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using OnlineShop.Entities;
+using BackEnd.Entities;
 
-namespace OnlineShop.Configurations
+namespace BackEnd.Configurations
 {
     public class ProductDbConfiguration : IEntityTypeConfiguration<ProductEntity>
     {

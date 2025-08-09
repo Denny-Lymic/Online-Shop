@@ -1,10 +1,10 @@
 using System.Diagnostics;
 using BackEnd.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShop.Models;
-using OnlineShop.Repositories;
+using BackEnd.Models;
+using BackEnd.Repositories;
 
-namespace OnlineShop.Controllers
+namespace BackEnd.Controllers
 {
     public class HomeController : Controller
     {

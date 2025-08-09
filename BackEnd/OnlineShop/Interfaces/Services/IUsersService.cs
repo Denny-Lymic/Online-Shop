@@ -1,5 +1,5 @@
-﻿using OnlineShop.DTO.User;
-using OnlineShop.Models;
+﻿using BackEnd.DTO.User;
+using BackEnd.Models;
 
 namespace BackEnd.Interfaces.Services
 {

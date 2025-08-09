@@ -2,9 +2,9 @@
 using BackEnd.Interfaces.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using OnlineShop.DTO.Product;
-using OnlineShop.Entities;
-using OnlineShop.Services;
+using BackEnd.DTO.Product;
+using BackEnd.Entities;
+using BackEnd.Services;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace xUnitTests.Core

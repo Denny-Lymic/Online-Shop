@@ -1,4 +1,4 @@
-﻿namespace OnlineShop.DTO.Product
+﻿namespace BackEnd.DTO.Product
 {
     public class ProductDto
     {

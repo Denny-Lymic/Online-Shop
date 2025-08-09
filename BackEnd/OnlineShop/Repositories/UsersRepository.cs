@@ -1,10 +1,10 @@
 ﻿using BackEnd.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
-using OnlineShop.Data;
-using OnlineShop.DTO.User;
-using OnlineShop.Entities;
+using BackEnd.Data;
+using BackEnd.DTO.User;
+using BackEnd.Entities;
 
-namespace OnlineShop.Repositories
+namespace BackEnd.Repositories
 {
     public class UsersRepository : IUsersRepository
     {

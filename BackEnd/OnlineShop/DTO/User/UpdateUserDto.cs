@@ -1,4 +1,4 @@
-﻿namespace OnlineShop.DTO.User
+﻿namespace BackEnd.DTO.User
 {
     public class UpdateUserDto
     {

@@ -1,6 +1,6 @@
-﻿using OnlineShop.Interfaces;
+﻿using BackEnd.Interfaces;
 
-namespace OnlineShop.Services
+namespace BackEnd.Services
 {
     public class PasswordHasher : IPasswordHasher
     {
