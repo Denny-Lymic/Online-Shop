@@ -2,7 +2,7 @@ export async function loader({ params }) {
     try {
         const { id } = params;
 
-        const userPromise = fetch(`${import.meta.env.VITE_API_URL}/api/Users/profile`, {
+        const userPromise = fetch(`/api/Users/profile`, {
             method: "GET",
             headers: { "Authorization": `Bearer ${localStorage.getItem("authToken")}` }
         })
@@ -13,7 +13,7 @@ export async function loader({ params }) {
                 return res.json()
             });
 
-        const productPromise = fetch(`${import.meta.env.VITE_API_URL}/api/Products/${id}`, {
+        const productPromise = fetch(`/api/Products/${id}`, {
             method: "GET",
         })
             .then(res => {
@@ -23,7 +23,7 @@ export async function loader({ params }) {
                 return res.json();
             })
 
-        const categoriesPromise = fetch(`${import.meta.env.VITE_API_URL}/api/Products/Categories`, {
+        const categoriesPromise = fetch(`/api/Products/Categories`, {
             method: "GET"
         })
             .then(res => {

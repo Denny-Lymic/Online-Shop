@@ -5,7 +5,7 @@ export async function updateProduct({ request, params }) {
         const formData = await request.formData();
         formData.append("id", id);
 
-        await fetch(`${import.meta.env.VITE_API_URL}/api/Products/Update`,
+        await fetch(`/api/Products/Update`,
             {
                 method: "PATCH",
                 body: formData

@@ -53,14 +53,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var viteConnectionString = builder.Configuration.GetConnectionString("ViteConnection") ?? throw new InvalidOperationException("Connection string 'ViteConnection' not found."); ;
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowLocal",
-      policy => policy
-        .WithOrigins(viteConnectionString, "http://localhost:47378")
-        .AllowAnyHeader()
-        .AllowAnyMethod());
-});
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("AllowLocal",
+//      policy => policy
+//        .WithOrigins(viteConnectionString, "http://localhost:47378")
+//        .AllowAnyHeader()
+//        .AllowAnyMethod());
+//});
 
 var app = builder.Build();
 

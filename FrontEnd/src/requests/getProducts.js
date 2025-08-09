@@ -6,7 +6,7 @@ export async function getProducts({ request }) {
 
         const searchParams = new URLSearchParams(filter).toString();
 
-        const searchPromise = fetch(`${import.meta.env.VITE_API_URL}/api/Products/Search?${searchParams}`, {
+        const searchPromise = fetch(`/api/Products/Search?${searchParams}`, {
             method: "GET"
         })
             .then(res => {

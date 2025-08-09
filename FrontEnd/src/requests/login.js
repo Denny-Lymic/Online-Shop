@@ -18,7 +18,7 @@ export async function action({ request }) {
         if (Object.keys(errors).length)
             return { errors };
 
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/Users/Login`, {
+        const res = await fetch(`/api/Users/Login`, {
             method: "POST",
             body: JSON.stringify({ email, password }),
             headers: { "Content-Type": "application/json" }

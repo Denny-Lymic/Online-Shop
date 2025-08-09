@@ -26,7 +26,7 @@ export async function action({ request }) {
             return { errors, color: "red.200" };
         }
 
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/Users`, {
+        const res = await fetch(`/api/Users`, {
             method: "POST",
             body: JSON.stringify({ Email: email, Name: userName, Password: password }),
             headers: { "Content-Type": "application/json" }

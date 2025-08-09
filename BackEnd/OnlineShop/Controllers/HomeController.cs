@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using BackEnd.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Models;
 using OnlineShop.Repositories;
@@ -8,11 +9,11 @@ namespace OnlineShop.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ProductsRepository _productsRepository;
-        private readonly UsersRepository _usersRepository;
-        private readonly OrdersRepository _ordersRepository;
+        private readonly IProductsRepository _productsRepository;
+        private readonly IUsersRepository _usersRepository;
+        private readonly IOrdersRepository _ordersRepository;
 
-        public HomeController(ILogger<HomeController> logger, ProductsRepository productsRepository, UsersRepository usersRepository, OrdersRepository ordersRepository)
+        public HomeController(ILogger<HomeController> logger, IProductsRepository productsRepository, IUsersRepository usersRepository, IOrdersRepository ordersRepository)
         {
             _logger = logger;
             _productsRepository = productsRepository;

@@ -9,7 +9,7 @@ export async function createProduct({ request }) {
             return { errors, imageBorderColor: "red.500" };
         }
 
-        await fetch(`${import.meta.env.VITE_API_URL}/api/Products/Create`,
+        await fetch(`/api/Products/Create`,
             {
                 method: "POST",
                 body: formData

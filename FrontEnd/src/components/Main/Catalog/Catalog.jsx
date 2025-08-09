@@ -16,9 +16,9 @@ export default function Catalog() {
 
     return (
         <>
-            {isBusy && (
+            {/* {isBusy && (
                 <SkeletonLoad columns={columns} />
-            )}
+            )} */}
             <Suspense fallback={<SkeletonLoad columns={columns} />}>
                 <Await resolve={products}>
                     {(data) => (
