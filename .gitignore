@@ -61,3 +61,6 @@ logs/
 # === Автоматически скачанные библиотеки (например, bootstrap в wwwroot) ===
 BackEnd/OnlineShop/wwwroot/lib/
 BackEnd/OnlineShop/wwwroot/images/
+
+# === Nginx ===
+nginx-1.28.0/
