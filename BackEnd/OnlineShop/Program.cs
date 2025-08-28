@@ -10,6 +10,7 @@ using BackEnd.Extensions;
 using BackEnd.Middlewares;
 using BackEnd.Interfaces.Services;
 using BackEnd.Interfaces.Repositories;
+using Microsoft.AspNetCore.HttpOverrides;
 
 //Copy api.env to enviroment
 var aspEnv = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
@@ -59,25 +60,32 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var viteConnectionString = builder.Configuration.GetConnectionString("ViteConnection") ?? throw new InvalidOperationException("Connection string 'ViteConnection' not found."); ;
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy("AllowLocal",
-//      policy => policy
-//        .WithOrigins(viteConnectionString, "http://localhost:47378")
-//        .AllowAnyHeader()
-//        .AllowAnyMethod());
-//});
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocal",
+      policy => policy
+        .WithOrigins("http://localhost:47378", "http://localhost:44387")
+        .AllowAnyHeader()
+        .AllowAnyMethod());
+});
 
 builder.Services.AddHsts(options =>
 {
     options.Preload = true;
     options.IncludeSubDomains = true;
     options.MaxAge = TimeSpan.FromDays(1);
-    options.ExcludedHosts.Add("example.com");
-    options.ExcludedHosts.Add("www.example.com");
 });
 
 var app = builder.Build();
+
+var opts = new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+};
+opts.KnownNetworks.Add(new IPNetwork(System.Net.IPAddress.Parse("172.18.0.0"), 16));
+opts.KnownProxies.Add(System.Net.IPAddress.Parse("172.18.0.1"));
+
+app.UseForwardedHeaders(opts);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

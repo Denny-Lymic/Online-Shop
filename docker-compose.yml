@@ -9,8 +9,8 @@ services:
       migrator:
         condition: service_completed_successfully
     environment:
-      - ConnectionStrings__ViteConnection=${ConnectionStrings__ViteConnection}
-      - DB_CONNECTION=${DB_CONNECTION}
+      - ConnectionStrings__ViteConnection=${ViteConnection}
+      - ConnectionStrings__ShopDbConnection=${DB_CONNECTION}
 
   migrator:
     image: OnlineShop/backend
@@ -43,6 +43,13 @@ services:
       start_period: 15s
     volumes:
       - mssqldata:/var/opt/mssql
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
+          gateway: 172.18.0.1
 
 volumes:
   mssqldata:

@@ -70,10 +70,7 @@ namespace BackEnd.Controllers
         public async Task<IActionResult> GetCategories()
         {
             var categories = await _productsService.GetProductCategoriesAsync();
-            if (categories == null || !categories.Any())
-            {
-                return NotFound("Categories not found");
-            }
+            
             return Ok(categories);
         }
 
@@ -82,10 +79,7 @@ namespace BackEnd.Controllers
         public async Task<IActionResult> GetMaxPrice()
         {
             var maxPrice = await _productsService.GetMaxPrice();
-            if (maxPrice == 0)
-            {
-                return NotFound("Max price not found");
-            }
+
             return Ok(maxPrice);
         }
 
