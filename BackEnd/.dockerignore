@@ -3,3 +3,5 @@ xUnitTests
 bin
 obj
 *.user
+OnlineShop/wwwroot/images
+*.log

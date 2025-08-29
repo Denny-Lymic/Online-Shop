@@ -14,6 +14,8 @@ export default function Catalog() {
 
     const columns = useBreakpointValue({ base: 2, sm: 3, md: 5, lg: 6 });
 
+    const IMAGE_BASE_URL = import.meta.env.VITE_API_URL || '';
+
     return (
         <>
             {/* {isBusy && (
@@ -28,7 +30,7 @@ export default function Catalog() {
                                     <LinkBox key={product.id}>
                                         <LinkOverlay as={Link} to={`product/${product.id}`}>
                                             <CardEntity
-                                                imageSrc={product.imageUrl ? `${import.meta.env.VITE_API_URL}/images/products/${product.imageUrl}` : viteLogo}
+                                                imageSrc={product.imageUrl ? `${IMAGE_BASE_URL}/images/products/${product.imageUrl}` : viteLogo}
                                                 title={product.name}
                                                 price={product.price}
                                             />

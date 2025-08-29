@@ -10,6 +10,8 @@ export default function ProductDetails() {
     // const navigation = useNavigation();
     // const isBusy = navigation.state !== "idle";
 
+    const IMAGE_BASE_URL = import.meta.env.VITE_API_URL || '';
+
     return (
         <Suspense>
             <Await resolve={product}>
@@ -26,7 +28,7 @@ export default function ProductDetails() {
                                         borderStyle="solid"
                                         borderColor="gray.300"
                                         rounded="md"
-                                        src={data.imageUrl ? `${import.meta.env.VITE_API_URL}/images/products/${data.imageUrl}` : viteLogo}
+                                        src={data.imageUrl ? `${IMAGE_BASE_URL}/images/products/${data.imageUrl}` : viteLogo}
                                         w="100%"
                                     />
 

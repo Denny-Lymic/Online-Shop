@@ -2,7 +2,7 @@ services:
   backend:
     image: OnlineShop/backend
     build:
-      context: ./BackEnd/
+      context: ./BackEnd
     ports:
       - "8081:5242"
     depends_on:
@@ -11,6 +11,8 @@ services:
     environment:
       - ConnectionStrings__ViteConnection=${ViteConnection}
       - ConnectionStrings__ShopDbConnection=${DB_CONNECTION}
+    volumes:
+      - images:/app/OnlineShop/wwwroot/images
 
   migrator:
     image: OnlineShop/backend
@@ -26,6 +28,8 @@ services:
       context: ./FrontEnd
     ports:
       - "8080:80"
+    volumes:
+      - images:/usr/share/nginx/images:ro
     depends_on:
       - backend
 
@@ -42,7 +46,7 @@ services:
       retries: 6
       start_period: 15s
     volumes:
-      - mssqldata:/var/opt/mssql
+      - mssql:/var/opt/mssql
 
 networks:
   default:
@@ -52,4 +56,9 @@ networks:
           gateway: 172.18.0.1
 
 volumes:
-  mssqldata:
+  mssql:
+    external: true
+    name: mssql
+  images:
+    external: true
+    name: images
